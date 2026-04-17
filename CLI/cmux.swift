@@ -29,7 +29,11 @@ private final class CLISocketSentryTelemetry {
 #if canImport(Sentry)
     private static let startupLock = NSLock()
     private static var started = false
-    private static let dsn = "https://ecba1ec90ecaee02a102fba931b6d2b3@o4507547940749312.ingest.us.sentry.io/4510796264636416"
+    // CLI Sentry endpoint: intentionally blank. The Open Sorcery fork does not
+    // yet have its own Sentry project; leaving the upstream DSN in place would
+    // ship telemetry to manaflow. Swap this to a project-owned DSN when one is
+    // provisioned.
+    private static let dsn = ""
 
     private static func currentSentryReleaseName() -> String? {
         guard let bundleIdentifier = currentSentryBundleIdentifier(),
@@ -274,6 +278,13 @@ private final class CLISocketSentryTelemetry {
         startupLock.lock()
         defer { startupLock.unlock() }
         guard !started else { return }
+        // Early-return when the fork has no provisioned Sentry project.
+        // Prevents the SDK from attempting any network init and keeps the
+        // upstream DSN from ever being reachable by accident in future edits.
+        guard !dsn.isEmpty else {
+            started = true
+            return
+        }
         SentrySDK.start { options in
             options.dsn = dsn
             options.releaseName = currentSentryReleaseName()

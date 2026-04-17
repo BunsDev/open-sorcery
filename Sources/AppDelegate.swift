@@ -2582,7 +2582,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
             _ = NSLocale.preferredLanguages
 
             SentrySDK.start { options in
-                options.dsn = "https://ecba1ec90ecaee02a102fba931b6d2b3@o4507547940749312.ingest.us.sentry.io/4510796264636416"
+                // Sentry endpoint: intentionally blank while Open Sorcery has no
+                // provisioned project. Paired with TelemetrySettings.isEnabled
+                // returning false, this whole closure is unreachable today.
+                options.dsn = ""
                 #if DEBUG
                 options.environment = "development"
                 options.debug = true

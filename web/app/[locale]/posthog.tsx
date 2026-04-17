@@ -5,9 +5,13 @@ import { PostHogProvider as PHProvider } from "posthog-js/react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, Suspense } from "react";
 
-if (typeof window !== "undefined") {
-  posthog.init("phc_opOVu7oFzR9wD3I6ZahFGOV2h3mqGpl5EHyQvmHciDP", {
-    api_host: "https://r.cmux.com",
+// Open Sorcery has no provisioned PostHog project yet. Leaving the upstream
+// key in place would send site analytics to manaflow's dashboard. The web
+// analytics stack is intentionally off until a project-owned key lands here.
+const OPEN_SORCERY_POSTHOG_KEY = "";
+if (typeof window !== "undefined" && OPEN_SORCERY_POSTHOG_KEY) {
+  posthog.init(OPEN_SORCERY_POSTHOG_KEY, {
+    api_host: "https://us.i.posthog.com",
     ui_host: "https://us.posthog.com",
     person_profiles: "identified_only",
     capture_pageview: false,

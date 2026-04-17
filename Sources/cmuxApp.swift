@@ -4115,13 +4115,15 @@ enum WelcomeSettings {
 
 enum TelemetrySettings {
     static let sendAnonymousTelemetryKey = "sendAnonymousTelemetry"
-    static let defaultSendAnonymousTelemetry = true
+    // Open Sorcery has not yet provisioned its own Sentry / PostHog projects.
+    // Force the whole telemetry stack off so the fork never phones data home
+    // to upstream (cmux/manaflow) infrastructure regardless of user setting.
+    static let defaultSendAnonymousTelemetry = false
 
     static func isEnabled(defaults: UserDefaults = .standard) -> Bool {
-        if defaults.object(forKey: sendAnonymousTelemetryKey) == nil {
-            return defaultSendAnonymousTelemetry
-        }
-        return defaults.bool(forKey: sendAnonymousTelemetryKey)
+        // Hard-disable until a real telemetry owner + credentials land.
+        // Drop this gate when the DSN/API key below are replaced.
+        return false
     }
 
     // Freeze telemetry enablement once per launch. Settings changes apply on next restart.

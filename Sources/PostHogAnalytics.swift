@@ -5,10 +5,12 @@ import PostHog
 final class PostHogAnalytics {
     static let shared = PostHogAnalytics()
 
-    // The PostHog project API key is intentionally embedded in the app (it's a public key).
-    private let apiKey = "phc_opOVu7oFzR9wD3I6ZahFGOV2h3mqGpl5EHyQvmHciDP"
+    // PostHog project API key: intentionally blank while Open Sorcery has no
+    // provisioned project. Paired with TelemetrySettings.isEnabled returning
+    // false, startIfNeeded() exits before touching PostHogSDK.
+    private let apiKey = ""
 
-    // PostHog Cloud US default (matches other cmux properties).
+    // PostHog Cloud US default (unused while apiKey is empty).
     private let host = "https://us.i.posthog.com"
 
     private let dailyActiveEvent = "cmux_daily_active"
