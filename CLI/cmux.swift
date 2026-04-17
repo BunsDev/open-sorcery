@@ -8128,7 +8128,7 @@ struct CMUXCLI {
         return true
     }
 
-    private static let cmuxThemeOverrideBundleIdentifier = "com.cmuxterm.app"
+    private static let cmuxThemeOverrideBundleIdentifier = "com.soulprotocol.opensourcery"
     private static let cmuxThemesBlockStart = "# cmux themes start"
     private static let cmuxThemesBlockEnd = "# cmux themes end"
     private static let cmuxThemesReloadNotificationName = "com.cmuxterm.themes.reload-config"
